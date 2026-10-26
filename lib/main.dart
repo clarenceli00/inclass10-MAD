@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 void main() {
   runApp(const MyApp());
 }
@@ -33,6 +32,12 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  List passwordHelp = ["You should add a symbol for a strong password.",
+  "Do not share this password with anyone else.", 
+  "Contact Support if you don't know your password"];
+
+  int tipIndex = 0;
 
   String passwordStrengthIndicator(String value){
     var strength = 0;
@@ -153,6 +158,27 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 child: const Text(
                   'Sign Up',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  final tip = passwordHelp[tipIndex];
+                  tipIndex = (tipIndex + 1) % passwordHelp.length;
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Local Password Tip: $tip'),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.purple,
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                ),
+                child: const Text(
+                  'Show Password Tip',
                   style: TextStyle(fontSize: 18),
                 ),
               ),
